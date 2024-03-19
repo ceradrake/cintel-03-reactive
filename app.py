@@ -29,11 +29,11 @@ with ui.layout_columns():
         ui.h2("Penguin Data Table")
     @render.data_frame
     def penguins_datatable():
-        return render.DataTable(penguins_df)
+        return render.DataTable(filtered_data())
     ui.h2("Penguin Data Grid")
     @render.data_frame
     def penguins_datagrid():
-        return render.DataGrid(penguins_df)
+        return render.DataGrid(filtered_data())
 
 #Plotly Histogram
 with ui.layout_columns():
@@ -41,13 +41,13 @@ with ui.layout_columns():
         ui.h2("Species Histogram")
     @render_plotly
     def plotly_histogram():
-        return px.histogram(penguins_df, x="bill_length_mm",
+        return px.histogram(filtered_data(), x="bill_length_mm",
                 color="species")
 #Seaborn Histogram
 ui.h2("Seaborn Histogram")
 @render.plot
 def plot_sns():
- return sns.histplot(penguins_df, x="body_mass_g", hue = 'species')
+ return sns.histplot(filtered_data(), x="body_mass_g", hue = 'species')
 
 #Plotly Scatterplot
 with ui.card(full_screen = True):
@@ -55,20 +55,8 @@ with ui.card(full_screen = True):
     @render_plotly
     def plotly_scatterplot():
         return px.scatter(
-            penguins_df, x="body_mass_g", y="flipper_length_mm", color = "species", symbol = "sex", title = "Body Mass based on Sex and Species"
+            filtered_data(), x="body_mass_g", y="flipper_length_mm", color = "species", symbol = "sex", title = "Body Mass based on Sex and Species"
         )
     
 shinyswatch.theme.journal()
 
-# --------------------------------------------------------
-# Reactive calculations and effects
-# --------------------------------------------------------
-
-# Add a reactive calculation to filter the data
-# By decorating the function with @reactive, we can use the function to filter the data
-# The function will be called whenever an input functions used to generate that output changes.
-# Any output that depends on the reactive function (e.g., filtered_data()) will be updated when the data changes.
-
-@reactive.calc
-def filtered_data():
-    return penguins_df

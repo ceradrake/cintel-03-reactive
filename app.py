@@ -21,6 +21,7 @@ with ui.sidebar(open = "open"):
     ui.input_slider("seaborn_bin_count", "Seaborn Bin Count", 0, 100, 50)
     ui.input_checkbox_group("selected_species_list", "List of Selected Species", ["Adelie", "Gentoo", "Chinstrap"],selected= ["Gentoo"], inline= False)
     ui.hr()
+    ui.input_checkbox_group("selected_island_list", "List of Selected Islands", ["Torgerson", "Biscoe", "Dream"], selected= ["Dream"], inline= False)
     ui.a("Cera's GitHub", href= "https://github.com/ceradrake/cintel_02-data/tree/main", target= "_blank")
 
 #Data Table and Data Grid
